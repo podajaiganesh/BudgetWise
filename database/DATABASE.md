@@ -72,31 +72,25 @@ Every financial record stored by the system belongs to exactly one user, ensurin
 
 #### 3.1.2 Attributes
 
-
-| Attribute       | Description                       | Required | Unique |
-| --------------- | --------------------------------- | -------- | ------ |
-| User ID         | Unique identifier for each user   | Yes      | Yes    |
-| Full Name       | User's full name                  | Yes      | No     |
-| Email Address   | User's login email address        | Yes      | Yes    |
-| Password        | Hashed account password           | Yes      | No     |
-| Profile Picture | Optional profile image            | No       | No     |
-| Created At      | Account creation timestamp        | Yes      | No     |
-| Updated At      | Last profile update timestamp     | Yes      | No     |
+| Attribute     | Description                    | Required | Unique |
+| ------------- | ------------------------------- | -------- | ------ |
+| User ID       | Unique identifier for each user | Yes      | Yes    |
+| Full Name     | User's full name                | Yes      | No     |
+| Email Address | User's login email address      | Yes      | Yes    |
+| Password Hash | Hashed account password         | Yes      | No     |
+| Created At    | Account creation timestamp      | Yes      | No     |
+| Updated At    | Last profile update timestamp   | Yes      | No     |
 
 #### 3.1.3 Validation Rules
-
 
 - Full Name shall not be empty.
 - Full Name shall contain between 2 and 100 characters.
 - Email Address shall follow a valid email format.
 - Email Address shall be unique across all registered users.
-- Password shall be securely stored using BCrypt hashing.
-- Password shall never be stored in plain text.
-- Profile Picture is optional.
+- Password Hash shall be securely generated using BCrypt hashing.
+- The plain-text password shall never be stored or logged.
 
 #### 3.1.4 Relationships
-
-
 
 A User may own zero or more Expense records.
 
@@ -112,8 +106,6 @@ A User may own zero or more custom Category records.
 
 #### 3.1.5 Business Rules
 
-
-
 Every registered user shall have a unique account.
 
 Every financial record stored within the application shall belong to exactly one user.
@@ -124,31 +116,45 @@ Deleting a user account shall permanently remove all associated financial record
 
 User passwords shall always remain encrypted.
 
+Permanently deleting a user account removes the associated email address from the system, allowing the same email address to be used for a future registration.
 
 #### 3.1.6 Lifecycle
 
 1. User registers a new account.
-
 2. Account information is securely stored.
-
 3. User authenticates using email and password.
-
 4. User updates profile information when required.
-
 5. User may permanently delete the account, removing all associated financial data.
 
 #### 3.1.7 Constraints
 
 - User ID shall be the Primary Key.
 - Email Address shall have a Unique Constraint.
-- Password shall always contain the hashed password value.
+- Password Hash shall always contain the hashed password value, never plain text.
 - A user cannot exist without an email address.
-- A user cannot exist without a password.
+- A user cannot exist without a password hash.
 
 #### 3.1.8 Indexes
 
 - Primary Index on User ID.
 - Unique Index on Email Address.
+
+#### 3.1.9 Excluded Attributes
+
+The following attributes were considered but intentionally excluded from Version 1 because they are not required by the Software Requirements Specification (SRS):
+
+- Profile Picture
+- Phone Number
+- Date of Birth
+- Address
+- Gender
+- Time Zone
+
+These attributes may be introduced in future versions if new functional requirements justify their inclusion.
+
+#### 3.1.10 Scope Assumptions
+
+BudgetWise Version 1 is designed for a single-currency environment. All monetary values are assumed to use Indian Rupees (INR). Multi-currency support and user-specific currency preferences are intentionally deferred to a future version of the application.
 
 ---
 
