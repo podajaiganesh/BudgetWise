@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Node.js
+node_modules/
+dist/
+
+# Java
+target/
+*.class
+
+# Environment
+.env
+
+# IDE
+.idea/
+.vscode/
